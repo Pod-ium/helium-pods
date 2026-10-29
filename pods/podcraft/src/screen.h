@@ -1,4 +1,4 @@
-// PicoCraft - sends the RW x RH RGB565 frame to the display, scaled 2x.
+// PodCraft - sends the RW x RH RGB565 frame to the display, scaled 2x.
 //
 // A 2x frame in the PicoCalc panel's 18-bit wire format is 300 KB, more than
 // the RAM left next to the world, so the frame goes out in bands of a few
