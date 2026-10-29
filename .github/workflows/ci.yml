@@ -60,7 +60,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # PicoCraft needs an RP2350: only the RP2350 boards are built.
+        # PodCraft needs an RP2350: only the RP2350 boards are built.
         board: [pico2_w, pico2]
     steps:
       - uses: actions/checkout@v4

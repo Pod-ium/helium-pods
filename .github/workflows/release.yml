@@ -1,6 +1,6 @@
-# Release: build PicoCraft for the PicoCalc + Pico 2 W and attach
-# it to the GitHub release as picocraft_<version>.uf2
-# (e.g. picocraft_1.0.0.uf2 for tag v1.0.0), with a SHA256SUMS file.
+# Release: build PodCraft for the PicoCalc + Pico 2 W and attach
+# it to the GitHub release as podcraft_<version>.uf2
+# (e.g. podcraft_1.0.0.uf2 for tag v1.0.0), with a SHA256SUMS file.
 #   - pushing a tag v* creates the release (notes generated from the commits)
 #     if it does not exist yet, then attaches the files;
 #   - publishing a release from the GitHub UI attaches them to it;

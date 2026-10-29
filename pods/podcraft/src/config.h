@@ -1,4 +1,4 @@
-// PicoCraft - game configuration. Hardware (pins, SPI/I2C speeds) lives in
+// PodCraft - game configuration. Hardware (pins, SPI/I2C speeds) lives in
 // the PicoPods PicoCalc terminal: override it with PD_PICOCALC_* compile
 // definitions in CMakeLists.txt (see docs/PORTING.md).
 #pragma once
@@ -29,5 +29,5 @@
 #define VIEW_DIST_MAX        32
 
 // ---------------------------------------------------------------- saves
-#define SAVE_DIR             "/picocraft"
+#define SAVE_DIR             "/podcraft"
 #define SAVE_SLOTS           3

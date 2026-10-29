@@ -1,4 +1,4 @@
-// PicoCraft - voxel ray caster (one DDA ray per pixel, "Minecraft4k" style),
+// PodCraft - voxel ray caster (one DDA ray per pixel, "Minecraft4k" style),
 // shared between the two cores.
 #include "render.h"
 
@@ -8,7 +8,7 @@
 #include "textures.h"
 #include "world.h"
 
-#if PICOCRAFT_DEVICE
+#if PODCRAFT_DEVICE
 #include "pico.h"            // __not_in_flash_func: the hot code runs from RAM
 #else
 #define __not_in_flash_func(f) f
