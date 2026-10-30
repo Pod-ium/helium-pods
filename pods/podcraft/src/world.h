@@ -1,4 +1,4 @@
-// PicoCraft - the block world: storage, generation, block picking.
+// PodCraft - the block world: storage, generation, block picking.
 #pragma once
 #include <cstdint>
 

@@ -1,4 +1,4 @@
-// PicoCraft - 2D primitives for the HUD and menus on the low-resolution frame.
+// PodCraft - 2D primitives for the HUD and menus on the low-resolution frame.
 #include "gfx.h"
 #include "config.h"
 #include "textures.h"

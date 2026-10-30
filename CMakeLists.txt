@@ -16,7 +16,7 @@ project(helium_pods C CXX ASM)
 include(${PICOPODS_PATH}/cmake/picopods.cmake)
 
 # Pods
-add_subdirectory(pods/picocraft)
+add_subdirectory(pods/podcraft)
 
 if(PD_HOST AND NOT EMSCRIPTEN)   # the browser build has pods only
     enable_testing()

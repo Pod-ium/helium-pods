@@ -1,4 +1,4 @@
-// PicoCraft - world saves on the SD card: SAVE_DIR/worldN.pcw.
+// PodCraft - world saves on the SD card: SAVE_DIR/worldN.pcw.
 #pragma once
 #include <cstdint>
 

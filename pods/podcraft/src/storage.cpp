@@ -1,5 +1,4 @@
-// PicoCraft - world saves: the header, then the whole world array.
-// The file format is the one of PicoCraft 1.7, so its saves still load.
+// PodCraft - world saves: the header, then the whole world array.
 #include "storage.h"
 
 #include <cstdio>
