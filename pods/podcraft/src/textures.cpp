@@ -1,4 +1,4 @@
-// PicoCraft - 16x16 textures generated at start-up (no external assets).
+// PodCraft - 16x16 textures generated at start-up (no external assets).
 #include "textures.h"
 
 #include <cmath>

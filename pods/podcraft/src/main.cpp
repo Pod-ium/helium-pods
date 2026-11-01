@@ -1,4 +1,4 @@
-// PicoCraft - a small voxel sandbox game for the ClockworkPi PicoCalc, on the PicoPods libraries.
+// PodCraft - a small voxel sandbox game for the ClockworkPi PicoCalc, on the PicoPods libraries.
 //
 // Core 0: game logic, keyboard, SD card, frame output (screen.cpp) and part of the ray casting.
 // Core 1: the rest of the ray casting. The rows of a frame are handed out one
@@ -310,7 +310,7 @@ void busy_screen(const char* s) {
 const char* save_error(int r) {
     switch (r) {
         case SAVE_NO_CARD: return "NO SD CARD";
-        case SAVE_BAD_FILE: return "NOT A PICOCRAFT SAVE";
+        case SAVE_BAD_FILE: return "NOT A PODCRAFT SAVE";
         default: return "SD CARD ERROR";
     }
 }
@@ -398,7 +398,7 @@ void menu() {
         gfx_darken(fb, 0, 0, RW, RH);
         if (help) draw_help(fb);
         else {
-            gfx_text_c(fb, RW / 2, 14, "PICOCRAFT", C_YELLOW, 3, 1);
+            gfx_text_c(fb, RW / 2, 14, "PODCRAFT", C_YELLOW, 3, 1);
             char items[M_COUNT][32];
             snprintf(items[M_RESUME], 32, "RESUME");
             snprintf(items[M_SAVE], 32, "SAVE     < SLOT %d >", save_slot + 1);
@@ -441,7 +441,7 @@ void title_screen() {
         pl.yaw = base_yaw + t * 0.25f;   // slow turn around the spawn point
         render_world(false, 0, 0, 0);
         uint16_t* fb = fbuf[back];
-        gfx_text_c(fb, RW / 2, 22, "PICOCRAFT", C_YELLOW, 3, 1);
+        gfx_text_c(fb, RW / 2, 22, "PODCRAFT", C_YELLOW, 3, 1);
         gfx_text_c(fb, RW / 2, 44, "A BLOCK WORLD ON THE PICOCALC", C_WHITE, 1, 1);
         if (((int)(t * 2)) & 1) gfx_text_c(fb, RW / 2, 100, "ENTER TO PLAY", C_WHITE, 1, 1);
         gfx_text_c(fb, RW / 2, 118, "N NEW WORLD   L LOAD SLOT 1", C_WHITE, 1, 1);
@@ -456,7 +456,7 @@ void title_screen() {
 
 // ------------------------------------------------------------------ main
 int main() {
-    pd::diag::begin("PicoCraft", PD_APP_VERSION, kStages, pd::array_count(kStages));
+    pd::diag::begin("PodCraft", PD_APP_VERSION, kStages, pd::array_count(kStages));
     pd::diag::stage(kStart);
 
     pd::TerminalConfig cfg;
@@ -471,7 +471,7 @@ int main() {
 
     // Colour bars (red, green, blue, white): a quick check of the panel.
     pd::diag::set_screen_log(false);
-    pd::app::splash(pd::ui::theme(0), "PicoCraft", "A block world on the PicoCalc", true);
+    pd::app::splash(pd::ui::theme(0), "PodCraft", "A block world on the PicoCalc", true);
     const uint32_t splash_end = pd::sys::now_ms() + 1500;
 
     pd::diag::stage(kTextures);

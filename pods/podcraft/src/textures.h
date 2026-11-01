@@ -1,4 +1,4 @@
-// PicoCraft - block textures (RGB565).
+// PodCraft - block textures (RGB565).
 #pragma once
 #include <cstdint>
 

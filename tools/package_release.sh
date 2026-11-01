@@ -4,7 +4,7 @@
 #
 #   tools/package_release.sh <version> [outdir]
 #
-# A leading "v" is dropped from the version (tag v1.2.0 -> picocraft_1.2.0.uf2).
+# A leading "v" is dropped from the version (tag v1.2.0 -> podcraft_1.2.0.uf2).
 # Needs PICO_SDK_PATH; PICOPODS_PATH as in picopods_import.cmake. Files go to outdir (default dist/).
 set -eu
 root=$(cd "$(dirname "$0")/.." && pwd)
@@ -13,7 +13,7 @@ version=${1#v}
 out=${2:-$root/dist}
 board=${PD_BOARD:-pico2_w}
 build=${RELEASE_BUILD_DIR:-$root/build-release}
-pods="picocraft"
+pods="podcraft"
 
 case $version in
     ''|*/*|*' '*) echo "bad version: '$1'" >&2; exit 2 ;;

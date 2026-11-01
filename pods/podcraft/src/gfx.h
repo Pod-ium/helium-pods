@@ -1,4 +1,4 @@
-// PicoCraft - 2D drawing on the RW x RH frame (HUD, menus) with a 3x5 font.
+// PodCraft - 2D drawing on the RW x RH frame (HUD, menus) with a 3x5 font.
 #pragma once
 #include <cstdint>
 

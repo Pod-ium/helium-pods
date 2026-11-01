@@ -1,4 +1,4 @@
-// PicoCraft - banded 2x output of the frame (see screen.h).
+// PodCraft - banded 2x output of the frame (see screen.h).
 #include "screen.h"
 
 #include <cstring>

@@ -1,4 +1,4 @@
-// PicoCraft - procedural world generation (toroidal: the noise is periodic).
+// PodCraft - procedural world generation (toroidal: the noise is periodic).
 #include "world.h"
 
 #include <cmath>

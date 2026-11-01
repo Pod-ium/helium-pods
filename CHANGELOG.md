@@ -13,12 +13,6 @@ CHANGELOG of hydrogenium-pods.
   tags `v*` and published releases.
 
 ### Pods
-- **PicoCraft 1.8** (new pod): the voxel sandbox game PicoCraft 1.7 moved
-  onto the libraries. 1.7 did not work on the PicoCalc: its own display
-  driver set 16-bit colour, which the panel ignores over SPI (it only takes
-  18-bit), toggled CS/DC with no settle time and split the window setup
-  from the pixels; its keyboard reads waited 150 µs instead of the 16 ms
-  the controller needs. The frame now goes to the panel in 18-bit bands by
-  DMA while both cores ray-cast the next one (rows handed out one at a
-  time), and the keyboard is read while core 1 renders. Saves of 1.7 still
-  load. Needs an RP2350.
+- **PodCraft** (new pod): voxel sandbox game. Procedural block world
+  ray-cast on both cores, 18-bit frame streamed to the panel in bands by
+  DMA, saves on the SD card. Needs an RP2350.

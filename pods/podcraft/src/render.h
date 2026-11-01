@@ -1,4 +1,4 @@
-// PicoCraft - voxel ray caster.
+// PodCraft - voxel ray caster.
 #pragma once
 #include <cstdint>
 
