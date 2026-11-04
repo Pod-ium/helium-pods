@@ -8,6 +8,7 @@ built on the PicoPods libraries.
 | Pod | Folder | What it is |
 |---|---|---|
 | **PodCraft** | [`pods/podcraft`](pods/podcraft) | Voxel sandbox game: ray-cast block world on both cores, saves on the SD card. Needs an RP2350 |
+| **PodABC** | [`pods/podabc`](pods/podabc) | Letters and numbers for young children, in Italian: the PicoCalc says a symbol and the child finds the key, or shows and says every key pressed. Every Pico |
 
 Part of the Pod-ium family of PicoCalc firmwares: [hydrogenium-pods](https://github.com/Pod-ium/hydrogenium-pods)
 (libraries and examples), [helium-pods](https://github.com/Pod-ium/helium-pods) (games),
@@ -25,16 +26,18 @@ into the build tree (`-DPICOPODS_FETCH_FROM_GIT_TAG=`, default `main`).
 # Firmware for PicoCalc + Pico 2 W (default)
 cmake -B build -DPICO_SDK_PATH=/path/to/pico-sdk
 cmake --build build -j
-# -> build/pods/podcraft/podcraft.uf2
+# -> build/pods/podcraft/podcraft.uf2, build/pods/podabc/podabc.uf2
 
 # Other boards
 cmake -B build-pico2 -DPD_BOARD=pico2       # PodCraft needs an RP2350 (pico2, pico2_w)
+cmake -B build-pico -DPD_BOARD=pico         # RP2040 boards build PodABC only
 
 # PC build: simulator + the pods' scripted sessions
 cmake -B build-host -DPD_TERMINAL=host -DPICO_SDK_PATH=/path/to/pico-sdk
 cmake --build build-host -j && ctest --test-dir build-host
 # ...and with SDL2 installed, the pod runs in a window (keyboard, sound):
 PD_SDCARD=./sd ./build-host/pods/podcraft/podcraft
+PD_SDCARD=./sd ./build-host/pods/podabc/podabc
 
 # The pods for the browser (load them into PicoPods Web like cartridges)
 PICO_SDK_PATH=/path/to/pico-sdk tools/build_web_pods.sh   # -> dist/web-pods
@@ -43,7 +46,7 @@ PICO_SDK_PATH=/path/to/pico-sdk tools/build_web_pods.sh   # -> dist/web-pods
 PICO_SDK_PATH=/path/to/pico-sdk tools/gate.sh all
 ```
 
-Needs Pico SDK 2.1.x, `arm-none-eabi-gcc` and CMake ≥ 3.13; the host build
+Needs Pico SDK 2.1.x, `arm-none-eabi-gcc`, CMake ≥ 3.13 and Python 3; the host build
 needs a C++17 compiler, Python 3 and `libmbedtls-dev` (and `libsdl2-dev` for
 the window). Flash a `.uf2` in BOOTSEL mode, or copy it to `pico2-apps/` of
 the SD card and start it from [UF2 Loader](https://github.com/pelrun/uf2loader).
@@ -51,11 +54,12 @@ the SD card and start it from [UF2 Loader](https://github.com/pelrun/uf2loader).
 ## CI and releases
 
 - **Pull requests and pushes** (`.github/workflows/ci.yml`): G-host (PC build
-  + the PodCraft session), G-fw (`pico2_w`, `pico2`: PodCraft needs an RP2350; `.uf2` files kept as artifacts
+  + the PodCraft and PodABC sessions, PodABC's player test), G-fw (`pico2_w`, `pico2`, and
+  `pico` for PodABC: PodCraft needs an RP2350; `.uf2` files kept as artifacts
   `helium-<board>`) and G-web (artifact `helium-web-pods`).
 - **Tags and releases** (`.github/workflows/release.yml`): pushing a tag
   `v*` creates its GitHub release, and publishing a release from the UI
-  works too; either way `podcraft_<version>.uf2` and `SHA256SUMS_<version>.txt` are attached
+  works too; either way `podcraft_<version>.uf2`, `podabc_<version>.uf2` and `SHA256SUMS_<version>.txt` are attached
   (tag `v1.2.0` gives version `1.2.0`). Locally:
   `PICO_SDK_PATH=… tools/package_release.sh <version>`. It can also be run
   by hand from the Actions tab for an existing tag.
@@ -68,7 +72,7 @@ the SD card and start it from [UF2 Loader](https://github.com/pelrun/uf2loader).
 ## Layout
 
 ```
-pods/                   podcraft/
+pods/                   podcraft/, podabc/
 tests/                  the pods' scripted host sessions (ctest)
 tools/                  gate.sh (merge gates), package_release.sh (release .uf2),
                         build_web_pods.sh (.pod.js), ci_ref.sh (CI: sibling repository ref)
