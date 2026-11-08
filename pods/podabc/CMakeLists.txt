@@ -9,7 +9,7 @@ picopods_add_pod(podabc
         src/draw.cpp
         ${CMAKE_CURRENT_BINARY_DIR}/assets_data.cpp
     TITLE "PodABC"
-    VERSION "1.0.0")
+    VERSION "1.1.0")
 target_include_directories(podabc PRIVATE src)
 
 # The assets (made by tools/make_assets.py, committed) become const arrays:

@@ -24,4 +24,9 @@ CHANGELOG of hydrogenium-pods.
   menu. Italian voice (Piper it_IT-paola) and Andika letters embedded in the
   firmware (~0.5 MB, `tools/make_assets.py`); every Pico board. Host tests:
   a scripted session and the player checked sample by sample.
+- PodABC 1.1.0: the voice of the 80s talking toys (Speak & Spell, "Grillo
+  Parlante"): the words go through an emulation of TI's LPC speech chip
+  (`tools/tms_voice.py`: 8 kHz, K-table lattice filter, chirp excitation,
+  8-bit output) with a lower, steadier pitch; the jingle is square-wave
+  beeps. `make_assets.py --style natural` keeps the previous voice.
 - CI builds the `pico` board too (PodABC; PodCraft is skipped there).

@@ -5,7 +5,11 @@ Writes the two files the pod embeds in its firmware (committed, so building
 the pod needs neither a voice nor a font):
 
   assets/voice.bin   the spoken letters, digits and phrases, plus the happy
-                     jingle: 8-bit mu-law, mono, 16 kHz
+                     jingle: 8-bit mu-law, mono, 16 kHz. By default the voice
+                     goes through an emulation of TI's LPC speech chip
+                     (tools/tms_voice.py): the sound of the Speak & Spell,
+                     "Grillo Parlante" in Italy. --style natural keeps the
+                     voice as Piper makes it.
   assets/glyphs.bin  A-Z, 0-9 and '?' as 16-level antialiased bitmaps, each
                      as large as fits in 304x304, run-length coded
 
@@ -37,6 +41,8 @@ import struct
 import wave
 
 import numpy as np
+
+import tms_voice
 
 RATE = 16000
 BOX = 304          # the largest glyph box (the screen is 320x320)
@@ -164,7 +170,7 @@ def write_wav(path, a):
         w.writeframes(np.clip(np.round(a * 32767), -32768, 32767).astype("<i2").tobytes())
 
 
-def make_voice(model, out, takes, length_scale, wav_dir=None):
+def make_voice(model, out, takes, length_scale, wav_dir=None, style="tms", pitch=130.0):
     from piper import PiperVoice
     voice = PiperVoice.load(model)
     clips = []
@@ -172,10 +178,16 @@ def make_voice(model, out, takes, length_scale, wav_dir=None):
     for name, text in symbols + list(PHRASES.items()):
         # the names of the keys slower than the phrases: clearer for children
         ls = length_scale * (1.3 if (name, text) in symbols else 1.0)
-        a = finish(*pick_take(synth_takes(voice, text, takes, ls)))
+        a, rate = pick_take(synth_takes(voice, text, takes, ls))
+        if style == "tms":
+            a, rate = tms_voice.vocode(a, rate, pitch_hz=pitch), RATE
+        a = finish(a, rate)
         clips.append((name, a))
         print(f"  {name:8} {text!r:24} {len(a) / RATE:.2f} s")
-    clips.append(("jingle", jingle()))
+    if style == "tms":   # C E G C as the toys' beeps
+        clips.append(("jingle", level(tms_voice.beeps([523.25, 659.25, 783.99, 1046.5]), -16.0)))
+    else:
+        clips.append(("jingle", jingle()))
     if wav_dir:
         os.makedirs(wav_dir, exist_ok=True)
         for name, a in clips:
@@ -250,11 +262,15 @@ def main():
     p.add_argument("--takes", type=int, default=7, help="takes per clip to choose from")
     p.add_argument("--length-scale", type=float, default=1.15, help="> 1 speaks slower")
     p.add_argument("--wav", metavar="DIR", help="also write the clips as .wav files to DIR")
+    p.add_argument("--style", choices=["tms", "natural"], default="tms",
+                   help="tms: TI speech-chip sound (default); natural: the voice as it is")
+    p.add_argument("--pitch", type=float, default=130.0,
+                   help="tms: median pitch of the voice in Hz (130: a man's voice)")
     a = p.parse_args()
     if a.only != "glyphs":
         if not a.voice:
             p.error("--voice is needed")
-        make_voice(a.voice, os.path.join(assets, "voice.bin"), a.takes, a.length_scale, a.wav)
+        make_voice(a.voice, os.path.join(assets, "voice.bin"), a.takes, a.length_scale, a.wav, a.style, a.pitch)
     if a.only != "voice":
         if not a.font:
             p.error("--font is needed")
