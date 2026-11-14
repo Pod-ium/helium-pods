@@ -27,7 +27,7 @@ pods/podcraft/src/   main.cpp (main loop, menus), config.h (tunables, keys),
                      screen.* (banded output to the panel), gfx.* (2D/HUD), textures.*,
                      storage.* (save/load of worlds)
 tests/               CMakeLists.txt (scripted session)
-tools/               gate.sh, package_release.sh, build_web_pods.sh, ci_ref.sh, ci_apt.sh
+tools/               gate.sh, package_release.sh, package_test.sh, build_web_pods.sh, ci_ref.sh, ci_apt.sh
 picopods_import.cmake
 ```
 
