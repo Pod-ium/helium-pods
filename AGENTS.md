@@ -12,6 +12,7 @@ The **games** of the Pod-ium family, firmware for the ClockworkPi
 | Pod | Folder | What it is |
 |---|---|---|
 | **PodCraft** | `pods/podcraft` | Voxel sandbox: procedural block world ray-cast on both cores, 18-bit frame streamed to the panel in bands by DMA, saves on the SD card. **Needs an RP2350** (Pico 2 / Pico 2 W) |
+| **The Last Bell** | `pods/lastbell` | RPG: party of four wardens, overworld + towns + four bell towers + the Veilspire, turn-based battles, skills, saves. 160x160 indexed framebuffer scaled 2x by `IndexedBlitter`. **Needs an RP2350** |
 
 Built on the **PicoPods libraries** of
 [hydrogenium-pods](https://github.com/Pod-ium/hydrogenium-pods)
@@ -26,7 +27,12 @@ pods/podcraft/src/   main.cpp (main loop, menus), config.h (tunables, keys),
                      world.* (world generation, blocks), render.* (ray caster, both cores),
                      screen.* (banded output to the panel), gfx.* (2D/HUD), textures.*,
                      storage.* (save/load of worlds)
-tests/               CMakeLists.txt (scripted session)
+pods/lastbell/src/   main.cpp (title, map loop, dialogs, menus), art.* (palette,
+                     tiles, sprites as ASCII art), maps.* (maps, NPCs, exits, bosses),
+                     data.* (classes, skills, enemies, story), game.* (party, levels),
+                     battle.* (turn-based battles), render.* (framebuffer + blitter),
+                     storage.* (saves), keys.*, config.h
+tests/               CMakeLists.txt (scripted sessions)
 tools/               gate.sh, package_release.sh, build_web_pods.sh, ci_ref.sh, ci_apt.sh
 picopods_import.cmake
 ```
@@ -61,6 +67,8 @@ picopods_import.cmake
 ### Saves (compatibility)
 - Worlds are saved as `/podcraft/world1.pcw` … `world3.pcw`: **64-byte
   header + 256 KB world = 262208 bytes** (checked by `podcraft_script`).
+  The Last Bell saves `/lastbell/saveN.pqs`: 64-byte header + the 196-byte
+  game state (checked by `lastbell_script`).
 - The game must start without an SD card.
 - Changing the format requires a version field in the header, loading of
   the previous format (or a clear refusal message), an updated test, and a
@@ -74,15 +82,15 @@ CMake ≥ 3.13, Ninja, C++17 compiler, Python 3, `libmbedtls-dev`,
 
 | Gate | Command | Must |
 |---|---|---|
-| G-host | `PICO_SDK_PATH=… tools/gate.sh host` | PC build, `podcraft_script` passes |
-| G-fw | `PICO_SDK_PATH=… tools/gate.sh fw pico2_w pico2` | `podcraft.uf2` links on both RP2350 boards |
-| G-web | `PICO_SDK_PATH=… tools/build_web_pods.sh` | `podcraft.pod.js` builds |
+| G-host | `PICO_SDK_PATH=… tools/gate.sh host` | PC build, `podcraft_script` and `lastbell_script` pass |
+| G-fw | `PICO_SDK_PATH=… tools/gate.sh fw pico2_w pico2` | `podcraft.uf2` and `lastbell.uf2` link on both RP2350 boards |
+| G-web | `PICO_SDK_PATH=… tools/build_web_pods.sh` | `podcraft.pod.js` and `lastbell.pod.js` build |
 
 If you also changed hydrogenium-pods, add `PICOPODS_PATH=/path/to/hydrogenium-pods`.
 Logs: `build-gate/*.log`.
 
 Play on the PC: `PD_SDCARD=./sd ./build-gate/host/pods/podcraft/podcraft`
-(window with SDL2), or scripted:
+(window with SDL2; same for `pods/lastbell/lastbell`), or scripted:
 `PD_SDCARD=./sd PD_FRAMES=./frames PD_KEYS="wait:1800,enter,wait:200,f3,shot" ./build-gate/host/pods/podcraft/podcraft`.
 
 ## Tests
@@ -130,7 +138,7 @@ in aurum-pods' `web/app.js`; changelog entry.
 - Changes that also need hydrogenium-pods use **the same branch name** there
   (CI's `tools/ci_ref.sh` builds against it); the library side reaches
   hydrogenium-pods `main` first.
-- Commit subject `PodCraft: <imperative summary>` (or `CI: …`, `Docs: …`),
+- Commit subject `<Pod>: <imperative summary>` (e.g. `PodCraft: …`, `The Last Bell: …`; or `CI: …`, `Docs: …`),
   wrapped body with what and why, test names and measured FPS when relevant.
   Add the attribution lines your harness requires. No model identifiers in
   commits, code or docs.
