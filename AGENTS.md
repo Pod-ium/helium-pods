@@ -34,6 +34,8 @@ pods/lastbell/src/   main.cpp (title, map loop, dialogs, menus), art.* (palette,
                      storage.* (saves), keys.*, config.h
 tests/               CMakeLists.txt (scripted sessions)
 tools/               gate.sh, package_release.sh, build_web_pods.sh, ci_ref.sh, ci_apt.sh
+tests/               CMakeLists.txt (scripted session)
+tools/               gate.sh, package_release.sh, package_test.sh, build_web_pods.sh, ci_ref.sh, ci_apt.sh
 picopods_import.cmake
 ```
 
