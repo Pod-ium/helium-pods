@@ -21,3 +21,9 @@ CHANGELOG of hydrogenium-pods.
 - **PodCraft** (new pod): voxel sandbox game. Procedural block world
   ray-cast on both cores, 18-bit frame streamed to the panel in bands by
   DMA, saves on the SD card. Needs an RP2350.
+- **The Last Bell** (new pod): Final-Fantasy-style RPG. Party of four
+  wardens in the drifting sky of Vael; overworld, towns, four bell towers
+  and the Veilspire, turn-based battles, skills learned on level-up, shops
+  and inns, three save slots on the SD card. 160x160 indexed framebuffer
+  scaled 2x by DMA (IndexedBlitter), tiles and sprites authored as ASCII
+  art. Needs an RP2350.

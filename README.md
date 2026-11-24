@@ -8,6 +8,7 @@ built on the PicoPods libraries.
 | Pod | Folder | What it is |
 |---|---|---|
 | **PodCraft** | [`pods/podcraft`](pods/podcraft) | Voxel sandbox game: ray-cast block world on both cores, saves on the SD card. Needs an RP2350 |
+| **The Last Bell** | [`pods/lastbell`](pods/lastbell) | Final-Fantasy-style RPG: four wardens, turn-based battles, skills, four bell towers and the Hollow King. Needs an RP2350 |
 
 Part of the Pod-ium family of PicoCalc firmwares: [hydrogenium-pods](https://github.com/Pod-ium/hydrogenium-pods)
 (libraries and examples), [helium-pods](https://github.com/Pod-ium/helium-pods) (games),
@@ -25,16 +26,16 @@ into the build tree (`-DPICOPODS_FETCH_FROM_GIT_TAG=`, default `main`).
 # Firmware for PicoCalc + Pico 2 W (default)
 cmake -B build -DPICO_SDK_PATH=/path/to/pico-sdk
 cmake --build build -j
-# -> build/pods/podcraft/podcraft.uf2
+# -> build/pods/podcraft/podcraft.uf2 and build/pods/lastbell/lastbell.uf2
 
 # Other boards
-cmake -B build-pico2 -DPD_BOARD=pico2       # PodCraft needs an RP2350 (pico2, pico2_w)
+cmake -B build-pico2 -DPD_BOARD=pico2       # both pods need an RP2350 (pico2, pico2_w)
 
 # PC build: simulator + the pods' scripted sessions
 cmake -B build-host -DPD_TERMINAL=host -DPICO_SDK_PATH=/path/to/pico-sdk
 cmake --build build-host -j && ctest --test-dir build-host
 # ...and with SDL2 installed, the pod runs in a window (keyboard, sound):
-PD_SDCARD=./sd ./build-host/pods/podcraft/podcraft
+PD_SDCARD=./sd ./build-host/pods/podcraft/podcraft   # or pods/lastbell/lastbell
 
 # The pods for the browser (load them into PicoPods Web like cartridges)
 PICO_SDK_PATH=/path/to/pico-sdk tools/build_web_pods.sh   # -> dist/web-pods
@@ -51,7 +52,7 @@ the SD card and start it from [UF2 Loader](https://github.com/pelrun/uf2loader).
 ## CI and releases
 
 - **Pull requests and pushes** (`.github/workflows/ci.yml`): G-host (PC build
-  + the PodCraft session), G-fw (`pico2_w`, `pico2`: PodCraft needs an RP2350; `.uf2` files kept as artifacts
+  + the pods' scripted sessions), G-fw (`pico2_w`, `pico2`: the pods need an RP2350; `.uf2` files kept as artifacts
   `helium-<board>`) and G-web (artifact `helium-web-pods`).
 - **Tags and releases** (`.github/workflows/release.yml`): pushing a tag
   `v*` creates its GitHub release, and publishing a release from the UI
@@ -73,7 +74,7 @@ the SD card and start it from [UF2 Loader](https://github.com/pelrun/uf2loader).
 ## Layout
 
 ```
-pods/                   podcraft/
+pods/                   podcraft/, lastbell/
 tests/                  the pods' scripted host sessions (ctest)
 tools/                  gate.sh (merge gates), package_release.sh (release .uf2),
                         build_web_pods.sh (.pod.js), ci_ref.sh (CI: sibling repository ref)
